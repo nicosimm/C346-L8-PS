@@ -37,6 +37,7 @@ const Edit = ({ navigation, route }) => {
     const [title, setTitle] = useState(book.title);
     const [isbn, setIsbn] = useState(book.isbn);
     const [copies, setCopies] = useState(String(book.copies));
+    const [image, setImage] = useState(book.image); // New state for the image URL
 
     const saveEdit = async () => {
         try {
@@ -46,7 +47,9 @@ const Edit = ({ navigation, route }) => {
 
             // Update the book entry
             const updatedBookList = bookList.map((b) =>
-                b.isbn === book.isbn ? { ...b, title, isbn, copies: parseInt(copies) } : b
+                b.isbn === book.isbn
+                    ? { ...b, title, isbn, copies: parseInt(copies), image }
+                    : b
             );
 
             // Save the updated list back to AsyncStorage
@@ -109,6 +112,12 @@ const Edit = ({ navigation, route }) => {
                 value={copies}
                 onChangeText={setCopies}
                 keyboardType="numeric"
+            />
+            <Text>Image URL:</Text>
+            <TextInput
+                style={styles.input}
+                value={image}
+                onChangeText={setImage}
             />
             <View style={styles.buttonContainer}>
                 <Button
